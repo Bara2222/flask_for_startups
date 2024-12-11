@@ -71,4 +71,12 @@ class Uzivatele(Base):
     surename = Column(String(50), nullable=False)
     created_at = Column(DateTime, nullable=False, server_default=func.now())
 
+class PocetDeti(Base):
+    __tablename__ = "pocet_deti"
+    id = Column(Integer, primary_key=True)
+    jmeno = Column(String(50), nullable=False)
+    pocet_deti = Column(Integer, nullable=False)
+    timestamp = Column(DateTime, nullable=False, server_default=func.now())
 
+    def __repr__(self):
+        return f"<PocetDeti {self.jmeno} - {self.pocet_deti}>"

@@ -13,19 +13,58 @@ from .views import (
     account_management_views,
     static_views,
 )
-from .models import User,Uzivatele
+from .models import User,Uzivatele,PocetDeti
 
 bp = Blueprint('routes', __name__)
 
 # alias
 db = db_manager.session
 from flask_wtf import FlaskForm, RecaptchaField
-from wtforms import StringField, PasswordField, BooleanField, SubmitField,DateField
-from wtforms.validators import DataRequired, Email, EqualTo, Length,InputRequired
+from wtforms import StringField, PasswordField, BooleanField, SubmitField,DateField,IntegerField
+from wtforms.validators import DataRequired, Email, EqualTo, Length,InputRequired,ValidationError
+import re
+class PocetDetiForm(FlaskForm):
+    def validate_no_special_characters(form, field):
+        if not re.match("^[a-zA-Z]*$", field.data):
+            raise ValidationError("Field must contain only letters without special characters.")
+
+    def validate_positive_integer(form, field):
+        if not field.data.isdigit() or int(field.data) <= 0:
+            raise ValidationError("Field must contain a positive integer.")
+
+    name = StringField('Name', validators=[
+        InputRequired(message="You can't leave this empty"),
+        validate_no_special_characters
+    ])
+    pocet_deti = StringField('Pocet Deti', validators=[
+        InputRequired(message="You can't leave this empty"),
+        validate_positive_integer
+    ])
+    @bp.route("/pocet_deti", methods=["GET", "POST"])
+    def pocet_deti():
+        form=PocetDetiForm()
+        if form.validate_on_submit():
+            print(form.name.data)
+            new_user = PocetDeti(name=form.name.data, pocet_deti=int(form.pocet_deti.data))
+            db.add(new_user)
+            db.commit()
+            return "Formular submitted"
+        return render_template("pocet_deti.html",form=form)
 
 class FormFormular(FlaskForm):
-    name = StringField('Name', validators=[ InputRequired(message="You can't leave this empty")])
-    surename = StringField('Surename', validators=[ InputRequired(message="You can't leave this empty")])
+    def validate_no_special_characters(form, field):
+        if not re.match("^[a-zA-Z0-9]*$", field.data):
+            raise ValidationError("Field must contain only letters and numbers.")
+
+    name = StringField('Name', validators=[
+        InputRequired(message="You can't leave this empty"),
+        validate_no_special_characters
+    ])
+    surename = StringField('Surename', validators=[
+        InputRequired(message="You can't leave this empty"),
+        validate_no_special_characters
+    ])
+
 
 @bp.route("/formular", methods=["GET", "POST"])
 def formular():
