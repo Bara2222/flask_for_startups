@@ -13,7 +13,7 @@ from .views import (
     account_management_views,
     static_views,
 )
-from .models import User,Uzivatele
+from .models import User,Uzivatele,Produkt
 
 bp = Blueprint('routes', __name__)
 
@@ -51,6 +51,35 @@ def load_user(user_id):
     """Load user by ID."""
     if user_id and user_id != "None":
         return User.query.filter_by(user_id=user_id).first()
+    
+class EditProductForm(FlaskForm):
+    name = StringField('Name', validators=[InputRequired(message="You can't leave this empty")])
+    date_added = DateField('Date Added', validators=[InputRequired(message="You can't leave this empty")])
+
+@bp.route("/edit_product/<int:product_id>", methods=["GET", "POST"])
+def edit_product(product_id):
+    product = product.query.get_or_404(product_id)
+    form = EditProductForm(obj=product)
+    if form.validate_on_submit():
+        product.name = form.name.data
+        product.date_added = form.date_added.data
+        db.commit()
+        return "Product updated"
+    return render_template("edit_product.html", form=form, product=product)
+
+class AddProductForm(FlaskForm):
+    name = StringField('Name', validators=[InputRequired(message="You can't leave this empty")])
+   
+
+@bp.route("/add_product", methods=["GET", "POST"])
+def add_product():
+    form = AddProductForm()
+    if form.validate_on_submit():
+        new_product = Produkt( name=form.name.data)
+        db.add(new_product)
+        db.commit()
+        return "Product added"
+    return render_template("product.html", form=form)
 
 # Error views
 bp.register_error_handler(404, error_views.not_found_error)
@@ -89,3 +118,5 @@ bp.add_url_rule(
 
 # Admin required
 bp.add_url_rule("/admin", view_func=static_views.admin)
+
+

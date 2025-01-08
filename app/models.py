@@ -76,7 +76,7 @@ class Produkt(Base):
     __tablename__ = "produkty"
     id = Column(Integer, primary_key=True)
     name = Column(String(100), nullable=False)
-    datum_zarazeni = Column(DateTime, nullable=False, server_default=func.now())
+    datum_zarazeni = Column(DateTime, nullable=True, server_default=func.now())
 
     def __repr__(self):
         return f"<Produkt {self.name}>"
