@@ -81,6 +81,11 @@ def add_product():
         return "Product added"
     return render_template("product.html", form=form)
 
+@bp.route("/list_products", methods=["GET"])
+def list_products():
+    products = Produkt.query.all()
+    return render_template("list_products.html", products=products)
+
 # Error views
 bp.register_error_handler(404, error_views.not_found_error)
 
