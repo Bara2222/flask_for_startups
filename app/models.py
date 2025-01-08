@@ -72,3 +72,12 @@ class Uzivatele(Base):
     created_at = Column(DateTime, nullable=False, server_default=func.now())
 
 
+class Produkt(Base):
+    __tablename__ = "produkty"
+    id = Column(Integer, primary_key=True)
+    name = Column(String(100), nullable=False)
+    datum_zarazeni = Column(DateTime, nullable=False, server_default=func.now())
+
+    def __repr__(self):
+        return f"<Produkt {self.name}>"
+
