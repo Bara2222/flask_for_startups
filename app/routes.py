@@ -86,6 +86,15 @@ def list_products():
     products = Produkt.query.all()
     return render_template("list_products.html", products=products)
 
+@bp.route("/delete_product/<int:product_id>", methods=["GET, POST"])
+def delete_product(product_id):
+    product = Produkt.query.get_or_404(product_id)
+    if product:
+        db.delete(product)
+        db.commit()
+        return "Product deleted"
+    return "Product not found"
+
 # Error views
 bp.register_error_handler(404, error_views.not_found_error)
 
