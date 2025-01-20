@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Seznam produktu</title>
+</head>
+<body>
+    <h2>Seznam pruduktu</h2>
+    <table>
+        <tr>
+            <th>Název</th>
+            <th>Datum zadání</th>
+        </tr>
+        {% for zaznam in zaznamy %}
+        <tr>
+            <td>{{ zaznam.jmeno }}</td>
+            <td>{{ zaznam.lat }}</td>
+            <td>{{ zaznam.stt }}</td>
+            <td>
+                <form action="{{ url_for('routes.smazat', id=zaznam.id) }}" method="POST">
+                    <button type="submit">Smazat</button>
+                </form>
+                <a href="/edit/{{zaznam.id}}">
+                    <button type="submit">Upravit</button>
+                </form>
+                
+            </td>
+        </tr>
+        {% endfor %}
+        {% if zaznamy|length == 0 %}
+        {% endif %}
+    </table>
+</body>
+</html>
