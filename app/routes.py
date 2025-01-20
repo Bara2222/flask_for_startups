@@ -66,6 +66,7 @@ def edit_product(product_id):
         db.commit()
         return "Product updated"
     return render_template("edit_product.html", form=form, product=product)
+    
 
 class AddProductForm(FlaskForm):
     name = StringField('Name', validators=[InputRequired(message="You can't leave this empty")])

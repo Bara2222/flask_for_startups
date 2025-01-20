@@ -10,24 +10,22 @@
             <th>Název</th>
             <th>Datum zadání</th>
         </tr>
-        {% for zaznam in zaznamy %}
         <tr>
-            <td>{{ zaznam.jmeno }}</td>
-            <td>{{ zaznam.lat }}</td>
-            <td>{{ zaznam.stt }}</td>
+            <td>{{ products.name }}</td>
+            <td>{{ products.date_added}}</td>
             <td>
-                <form action="{{ url_for('routes.smazat', id=zaznam.id) }}" method="POST">
+                <form action="{{ url_for('delete_products', id=product.id) }}" method="POST">
                     <button type="submit">Smazat</button>
                 </form>
-                <a href="/edit/{{zaznam.id}}">
+                <a href="/edit/{{product.id}}">
                     <button type="submit">Upravit</button>
                 </form>
                 
             </td>
         </tr>
-        {% endfor %}
-        {% if zaznamy|length == 0 %}
-        {% endif %}
+            <tr>
+                <td colspan="2">Žádné produkty</td>
+            </tr>
     </table>
 </body>
 </html>

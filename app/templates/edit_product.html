@@ -1,10 +1,9 @@
 {% from "macros/fields.html" import render_input_field, render_password_field, render_checkbox_field, render_submit %}
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Edit produktu</title>
-</head>
-{% block content %}
+     
+    {% block title %}Přihlášení{% endblock %}
+
+
+    {% block content %}
   <h3>Edit produktu</h3>
   <form method="POST" id='login-form'>
     {{ form.hidden_tag() }}
@@ -13,4 +12,6 @@
   </form>
   <br>
 {% endblock %}
-</html>
+
+
+
