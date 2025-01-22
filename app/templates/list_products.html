@@ -11,21 +11,14 @@
             <th>Datum zadání</th>
         </tr>
         <tr>
-            <td>{{ products.name }}</td>
-            <td>{{ products.date_added}}</td>
-            <td>
-                <form action="{{ url_for('delete_products', id=product.id) }}" method="POST">
-                    <button type="submit">Smazat</button>
-                </form>
-                <a href="/edit/{{product.id}}">
-                    <button type="submit">Upravit</button>
-                </form>
-                
-            </td>
-        </tr>
+        {% for product in products %}
             <tr>
-                <td colspan="2">Žádné produkty</td>
+                <td>{{ product.name }}</td>
+                <td>{{ product.date_added }}</td>
             </tr>
+        {% endfor %}
+
+ 
     </table>
 </body>
 </html>

@@ -58,7 +58,7 @@ class EditProductForm(FlaskForm):
 
 @bp.route("/edit_product/<int:product_id>", methods=["GET", "POST"])
 def edit_product(product_id):
-    product = product.query.get_or_404(product_id)
+    product = Produkt.query.filter_by(id=product_id).first()
     form = EditProductForm(obj=product)
     if form.validate_on_submit():
         product.name = form.name.data
