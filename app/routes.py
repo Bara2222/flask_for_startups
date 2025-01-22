@@ -82,14 +82,14 @@ def add_product():
         return "Product added"
     return render_template("product.html", form=form)
 
-@bp.route("/list_products", methods=["GET"])
+@bp.route("/list_products", methods=["GET"  ])
 def list_products():
     products = Produkt.query.all()
     return render_template("list_products.html", products=products)
 
-@bp.route("/delete_product/<int:product_id>", methods=["GET, POST"])
+@bp.route("/delete_product/<int:product_id>", methods=["GET", "POST"])
 def delete_product(product_id):
-    product = Produkt.query.get_or_404(product_id)
+    product = Produkt.query.filter_by(id=product_id).first()
     if product:
         db.delete(product)
         db.commit()

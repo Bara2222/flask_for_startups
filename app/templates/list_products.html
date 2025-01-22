@@ -15,8 +15,11 @@
             <tr>
                 <td>{{ product.name }}</td>
                 <td>{{ product.date_added }}</td>
+                <td><a href="/edit_product/{{product.id}}">Upravit</a></td>
+                <td><a href="/delete_product/{{product.id}}">Smazat</a></td>
             </tr>
         {% endfor %}
+        
 
  
     </table>
