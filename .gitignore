@@ -1,6 +1,6 @@
 *.py[cod]
 .pytest_cache
-site.db
+#site.db
 # Packages
 *.egg
 *.egg-info
@@ -32,5 +32,5 @@ nosetests.xml
 venv
 logs
 migrations/schema.sql
-.flaskenv
+#.flaskenv
 .vscode
